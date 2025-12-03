@@ -1,0 +1,6 @@
+# Strict and relaxed Clippy profiles using the score_rust_policies module.
+build:strict --@rules_rust//rust/settings:clippy.toml=@score_rust_policies//clippy/strict:clippy.toml
+build:relaxed --@rules_rust//rust/settings:clippy.toml=@score_rust_policies//clippy/relaxed:clippy.toml
+
+# Common options
+test --test_output=errors
