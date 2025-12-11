@@ -1,8 +1,10 @@
 # rustfmt defaults for S-CORE repositories.
 # License: Apache-2.0 (see LICENSE.md).
 
-edition = "2024"
+edition = "2021"
 tab_spaces = 4
 match_block_trailing_comma = true
-max_width = 150
+max_width = 120
+force_explicit_abi = true
+newline_style = "Unix"
 use_field_init_shorthand = true
