@@ -13,6 +13,13 @@
 
 load("@aspect_rules_lint//lint:clippy.bzl", "lint_clippy_aspect")
 
-clippy = lint_clippy_aspect(
+clippy_strict = lint_clippy_aspect(
     config = Label("//clippy/strict:clippy.toml"),
 )
+
+clippy_relaxed = lint_clippy_aspect(
+    config = Label("//clippy/relaxed:clippy.toml"),
+)
+
+# Backwards-compatible default.
+clippy = clippy_strict

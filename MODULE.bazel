@@ -13,8 +13,8 @@
 
 module(
     name = "score_rust_policies",
-    version = "0.0.3",
+    version = "0.0.4",
     compatibility_level = 0,
 )
 
-bazel_dep(name = "aspect_rules_lint", version = "1.13.0")
+bazel_dep(name = "aspect_rules_lint", version = "2.0.0")
