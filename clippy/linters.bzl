@@ -1,5 +1,5 @@
 # *******************************************************************************
-# Copyright (c) 2025 Contributors to the Eclipse Foundation
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -11,7 +11,15 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-exports_files(
-    ["linters.bzl"],
-    visibility = ["//visibility:public"],
+load("@aspect_rules_lint//lint:clippy.bzl", "lint_clippy_aspect")
+
+clippy_strict = lint_clippy_aspect(
+    config = Label("//clippy/strict:clippy.toml"),
 )
+
+clippy_relaxed = lint_clippy_aspect(
+    config = Label("//clippy/relaxed:clippy.toml"),
+)
+
+# Backwards-compatible default.
+clippy = clippy_strict

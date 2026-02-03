@@ -47,7 +47,7 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 ## Using with Bazel (bzlmod)
 - Add to your `MODULE.bazel`:
   ```
-  bazel_dep(name = "score_rust_policies", version = "0.0.1")
+  bazel_dep(name = "score_rust_policies", version = "0.0.4")
   ```
 - During local development you can pin a checkout with:
   ```
