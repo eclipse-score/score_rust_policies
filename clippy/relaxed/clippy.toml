@@ -1,4 +1,4 @@
 # Clippy configuration for tooling, generators, and test-only code.
 # License: Apache-2.0 (see LICENSE.md).
 
-msrv = "1.84.0"
+msrv = "1.90.0"
