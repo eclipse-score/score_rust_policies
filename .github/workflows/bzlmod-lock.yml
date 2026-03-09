@@ -10,21 +10,19 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-name: Bazel tests
+name: Bzlmod Lockfile Check
+permissions:
+  contents: read
 on:
   pull_request:
     types: [opened, reopened, synchronize]
   merge_group:
     types: [checks_requested]
+  push:
+    branches:
+      - main
 jobs:
-  bazel-test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Bazelisk
-        uses: bazelbuild/setup-bazelisk@v3
-      - name: Run Clippy config tests
-        working-directory: tests
-        run: |
-          bazel build --lockfile_mode=error --config=strict //:sample_clippy
-          bazel build --lockfile_mode=error --config=relaxed //:sample_clippy
+  bzlmod-lock:
+    uses: eclipse-score/cicd-workflows/.github/workflows/bzlmod-lock-check.yml@main
+    with:
+      working-directory: .
