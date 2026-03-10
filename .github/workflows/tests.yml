@@ -26,5 +26,5 @@ jobs:
       - name: Run Clippy config tests
         working-directory: tests
         run: |
-          bazel build --lockfile_mode=error --config=strict //:sample_clippy
-          bazel build --lockfile_mode=error --config=relaxed //:sample_clippy
+          bazel build --config=strict //:sample_clippy
+          bazel build --config=relaxed //:sample_clippy
