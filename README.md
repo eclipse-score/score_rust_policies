@@ -9,6 +9,7 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 ## Clippy policy levels
 - `clippy/strict/clippy.toml`: ASIL-B–oriented settings for safety-critical code (enables `pedantic`/`nursery`, disallows `panic`/`unwrap`/`expect`, forbids debug/print macros, and enforces size/complexity thresholds).
 - `clippy/relaxed/clippy.toml`: For tooling, generators, and tests where controlled panics/unwraps and debug printing are acceptable. Still forbids `todo` and `unimplemented`.
+- `clippy/strict/Cargo.toml` / `clippy/relaxed/Cargo.toml`: Corresponding `[lints.rust]`, `[lints.clippy]`, and `[profile.release]` settings for use directly in a project's `Cargo.toml`. See the [SCORE Rust Coding Guidelines](https://eclipse-score.github.io/score/contribute/development/rust/coding_guidelines.html) for the full rationale and coverage matrix.
 
 ## How to use Clippy in consumers
 - Wire configs in your repo’s `.bazelrc` (mirrors `tests/.bazelrc`):

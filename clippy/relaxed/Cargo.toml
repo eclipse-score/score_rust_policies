@@ -1,6 +1,8 @@
 # Cargo.toml lint profile – safety-oriented practical baseline
 # License: Apache-2.0 (see LICENSE.md).
 #
+# Background and rationale: https://eclipse-score.github.io/score/contribute/development/rust/coding_guidelines.html
+#
 # Copy the [lints.rust], [lints.clippy], and [profile.release] sections below
 # into your project's Cargo.toml to adopt the SCORE practical baseline.
 
