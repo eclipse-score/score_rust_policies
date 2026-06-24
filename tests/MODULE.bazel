@@ -17,7 +17,7 @@ module(
     compatibility_level = 0,
 )
 
-bazel_dep(name = "rules_rust", version = "0.56.0")
+bazel_dep(name = "rules_rust", version = "0.67.0")
 bazel_dep(name = "score_rust_policies", version = "0.0.1")
 local_path_override(
     module_name = "score_rust_policies",
