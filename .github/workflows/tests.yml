@@ -19,6 +19,8 @@ on:
 jobs:
   bazel-test:
     runs-on: ubuntu-latest
+    env:
+      USE_BAZEL_VERSION: 8.4.1
     steps:
       - uses: actions/checkout@v4
       - name: Install Bazelisk
