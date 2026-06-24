@@ -39,6 +39,40 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
   ```
   Then run `bazel build --config=clippy-strict //:clippy` (or `--config=clippy-relaxed`).
 
+## Applying rustc lints in a Bazel-first repo
+The `[lints.rust]` table in `lint-profiles/{strict,relaxed}/Cargo.toml` is a Cargo
+feature and is **not** read by `rules_rust`. For Bazel-only consumers (e.g.
+`baselibs_rust`), the same rustc lints are exported as ready-to-use flag lists in
+[rustc-lints/flags.bzl](rustc-lints/flags.bzl), so they don't have to be redefined.
+
+- Load the shared flag list and apply it per target:
+  ```starlark
+  load("@score_rust_policies//rustc-lints:flags.bzl", "STRICT_RUSTC_FLAGS")
+
+  rust_library(
+      name = "my_lib",
+      srcs = [...],
+      rustc_flags = STRICT_RUSTC_FLAGS,  # or RELAXED_RUSTC_FLAGS
+  )
+  ```
+- To apply the same lints to every target via a `.bazelrc` config instead, use
+  `@rules_rust//rust/settings:extra_rustc_flags`. Note: a `.bazelrc` cannot `load`
+  a `.bzl`, so the flags must be repeated literally there:
+  ```
+  build:rustc-strict --@rules_rust//rust/settings:extra_rustc_flags=-Wunused,-Dunsafe_op_in_unsafe_fn,-Wmissing_abi,-Wunreachable_pub,-Wmissing_docs,-Wunused_results,-Wlet_underscore_drop,-Wnon_exhaustive_omitted_patterns,-Welided_lifetimes_in_paths,-Wexplicit_outlives_requirements,-Wmacro_use_extern_crate,-Wmeta_variable_misuse,-Wnon_local_definitions,-Wredundant_lifetimes,-Wsingle_use_lifetimes,-Wtrivial_numeric_casts,-Wunit_bindings,-Wunnameable_types,-Wvariant_size_differences
+  ```
+- Combine with the matching Clippy profile when building:
+  ```
+  bazel build --config=clippy-strict --config=rustc-strict //src/...
+  ```
+
+Notes:
+- The flag lists in [rustc-lints/flags.bzl](rustc-lints/flags.bzl) mirror the
+  `[lints.rust]` tables in lint-profiles; keep both in sync (there is no automatic
+  translation from `[lints.rust]` to rustc flags).
+- Loading the constant (per target) avoids duplicating the flags; the global
+  `.bazelrc` path cannot read the `.bzl` and therefore repeats them.
+
 ## Local validation
 - From `tests/` (consumer workspace with a local_path_override) run:
   - `bazel build --config=strict //:sample_clippy`
@@ -70,6 +104,7 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 - `.gitignore`: common ignores for Bazel and development tooling.
 - `clippy/`: Clippy-only configs exported as `@score_rust_policies//clippy/{strict,relaxed}:clippy.toml`.
 - `lint-profiles/`: Cargo lint profiles exported as `@score_rust_policies//lint-profiles/{strict,relaxed}:Cargo.toml`.
+- `rustc-lints/`: rustc lint flag lists for Bazel consumers, exported as `@score_rust_policies//rustc-lints:flags.bzl` (`STRICT_RUSTC_FLAGS` / `RELAXED_RUSTC_FLAGS`).
 - `tests/`: consumer workspace that depends on this module via `local_path_override` and runs Clippy with strict/relaxed configs.
 - `rustfmt/`: rustfmt defaults.
 
