@@ -2,3 +2,4 @@
 # License: Apache-2.0 (see LICENSE.md).
 
 msrv = "1.90.0"
+check-private-items = true

@@ -8,7 +8,8 @@
 
 # Rust compiler lints (rustc)
 [lints.rust]
-unsafe_op_in_unsafe_fn = "deny"
+# Relaxed baseline keeps the lint visible but does not fail the build.
+unsafe_op_in_unsafe_fn = "warn"
 missing_abi = "warn"
 unreachable_pub = "warn"
 missing_docs = "warn"
