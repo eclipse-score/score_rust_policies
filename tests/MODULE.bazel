@@ -19,12 +19,10 @@ module(
 
 bazel_dep(name = "rules_rust", version = "0.56.0")
 bazel_dep(name = "score_rust_policies", version = "0.0.1")
-
 local_path_override(
     module_name = "score_rust_policies",
     path = "..",
 )
-
 
 rust = use_extension("@rules_rust//rust:extensions.bzl", "rust", dev_dependency = True)
 rust.toolchain(
