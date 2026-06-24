@@ -6,12 +6,12 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 - Distribute those policies as a Bazel module (`score_rust_policies`) so bzlmod users can depend on them directly.
 - Keep tooling configurations (e.g., Clippy, rustfmt) versioned and auditable in one place.
 
-## Clippy policy levels
+## Rust lint policy levels
 - `clippy/strict/clippy.toml`: ASIL-B–oriented settings for safety-critical code (enables `pedantic`/`nursery`, disallows `panic`/`unwrap`/`expect`, forbids debug/print macros, and enforces size/complexity thresholds).
 - `clippy/relaxed/clippy.toml`: For tooling, generators, and tests where controlled panics/unwraps and debug printing are acceptable. Still forbids `todo` and `unimplemented`.
-- `clippy/strict/Cargo.toml` / `clippy/relaxed/Cargo.toml`: Corresponding `[lints.rust]`, `[lints.clippy]`, and `[profile.release]` settings for use directly in a project's `Cargo.toml`. See the [SCORE Rust Coding Guidelines](https://eclipse-score.github.io/score/contribute/development/rust/coding_guidelines.html) for the full rationale and coverage matrix.
+- `lint-profiles/strict/Cargo.toml` / `lint-profiles/relaxed/Cargo.toml`: Corresponding `[lints.rust]`, `[lints.clippy]`, and `[profile.release]` settings for use directly in a project's `Cargo.toml`. See the [SCORE Rust Coding Guidelines](https://eclipse-score.github.io/score/contribute/development/rust/coding_guidelines.html) for the full rationale and coverage matrix.
 
-## How to use Clippy in consumers
+## How to use lint policies in consumers
 - Wire configs in your repo’s `.bazelrc` (mirrors `tests/.bazelrc`):
   ```
   build:clippy-strict  --@rules_rust//rust/settings:clippy.toml=@score_rust_policies//clippy/strict:clippy.toml
@@ -48,7 +48,7 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 ## Using with Bazel (bzlmod)
 - Add to your `MODULE.bazel`:
   ```
-  bazel_dep(name = "score_rust_policies", version = "0.0.4")
+  bazel_dep(name = "score_rust_policies", version = "<latest-version>")
   ```
 - During local development you can pin a checkout with:
   ```
@@ -58,8 +58,8 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
   )
   ```
 - Reference policy files in Bazel targets with:
-  - `@score_rust_policies//clippy:clippy.toml` for safety components.
-  - `@score_rust_policies//clippy:clippy_relaxed.toml` for tooling/tests.
+  - `@score_rust_policies//clippy/strict:clippy.toml` for safety components.
+  - `@score_rust_policies//clippy/relaxed:clippy.toml` for tooling/tests.
 - When running Clippy directly, pass the config you need: `cargo clippy --config-path path/to/clippy/clippy.toml`.
 
 ## Repository layout
@@ -68,9 +68,10 @@ Centralized Rust linting and formatting policies for the Eclipse Safe Open Vehic
 - `LICENSE.md`: Apache License 2.0.
 - `CONTRIBUTION.md`: contribution process and links to S-CORE guidelines.
 - `.gitignore`: common ignores for Bazel and development tooling.
-- `clippy/`: Clippy configs exported as `@score_rust_policies//clippy/{strict,relaxed}:clippy.toml`.
+- `clippy/`: Clippy-only configs exported as `@score_rust_policies//clippy/{strict,relaxed}:clippy.toml`.
+- `lint-profiles/`: Cargo lint profiles exported as `@score_rust_policies//lint-profiles/{strict,relaxed}:Cargo.toml`.
 - `tests/`: consumer workspace that depends on this module via `local_path_override` and runs Clippy with strict/relaxed configs.
-- (planned) `rustfmt/`: rustfmt defaults when added.
+- `rustfmt/`: rustfmt defaults.
 
 ## Contributing
 See `CONTRIBUTION.md` for how to propose and review policy changes. All contributions require ECA/DCO sign-off and follow the Eclipse Foundation project handbook.
