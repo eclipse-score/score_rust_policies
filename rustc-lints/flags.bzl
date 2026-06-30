@@ -44,7 +44,10 @@ STRICT_RUSTC_FLAGS = [
     "-Wmissing_docs",
     "-Wunused_results",
     "-Wlet_underscore_drop",
-    "-Wnon_exhaustive_omitted_patterns",
+    # non_exhaustive_omitted_patterns is unstable and emits an "unknown lint"
+    # warning on stable toolchains; enable it only on nightly. Keep this in
+    # sync with the commented entry in lint-profiles/strict/Cargo.toml.
+    # "-Wnon_exhaustive_omitted_patterns",
     "-Welided_lifetimes_in_paths",
     "-Wexplicit_outlives_requirements",
     "-Wmacro_use_extern_crate",
@@ -63,13 +66,18 @@ RELAXED_RUSTC_FLAGS = [
     # Lint groups first (lower priority).
     "-Wunused",
     # Specific lints.
-    "-Dunsafe_op_in_unsafe_fn",
+    # Relaxed keeps unsafe_op_in_unsafe_fn at warn (matches the relaxed Cargo
+    # profile); strict denies it.
+    "-Wunsafe_op_in_unsafe_fn",
     "-Wmissing_abi",
     "-Wunreachable_pub",
     "-Wmissing_docs",
     "-Wunused_results",
     "-Wlet_underscore_drop",
-    "-Wnon_exhaustive_omitted_patterns",
+    # non_exhaustive_omitted_patterns is unstable and emits an "unknown lint"
+    # warning on stable toolchains; enable it only on nightly. Keep this in
+    # sync with the commented entry in lint-profiles/relaxed/Cargo.toml.
+    # "-Wnon_exhaustive_omitted_patterns",
     "-Welided_lifetimes_in_paths",
     "-Wexplicit_outlives_requirements",
     "-Wmacro_use_extern_crate",

@@ -25,8 +25,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Bazelisk
         uses: bazelbuild/setup-bazelisk@v3
+      - name: Check Cargo/Bazel rustc lint profile sync
+        run: python3 tools/check_lint_sync.py
       - name: Run Clippy config tests
         working-directory: tests
         run: |
-          bazel build --config=strict //:sample_clippy
-          bazel build --config=relaxed //:sample_clippy
+          bazel build --config=clippy-strict //:sample_clippy
+          bazel build --config=clippy-relaxed //:sample_clippy

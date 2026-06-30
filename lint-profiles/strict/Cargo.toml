@@ -15,7 +15,11 @@ unreachable_pub = "warn"
 missing_docs = "warn"
 unused_results = "warn"
 let_underscore_drop = "warn"
-non_exhaustive_omitted_patterns = "warn"
+# non_exhaustive_omitted_patterns is unstable and emits an "unknown lint"
+# warning on stable toolchains. Enable it only on nightly (requires
+# #![feature(non_exhaustive_omitted_patterns_lint)]). Keep this in sync with
+# rustc-lints/flags.bzl.
+# non_exhaustive_omitted_patterns = "warn"
 
 # Rustc lints recommended to evaluate as warn
 elided_lifetimes_in_paths = "warn"
