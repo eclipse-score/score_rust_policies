@@ -72,6 +72,12 @@ shadow_unrelated = "warn"
 try_err = "warn"
 wildcard_enum_match_arm = "warn"
 
+# Silent wrong-value correctness (no panic)
+# These produce silently wrong results or resource leaks rather than panicking,
+# so they are not caught by process supervision.
+float_cmp = "warn"            # exact float `==` / `!=` is silently wrong
+mem_forget = "warn"           # skipping `Drop` leaks resources without panicking
+
 # Deny
 as_ptr_cast_mut = "deny"
 let_underscore_must_use = "deny"
