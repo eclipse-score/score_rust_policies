@@ -1,4 +1,10 @@
 # clippy.toml - ASIL-B profile, compatible with your Clippy version
 # License: Apache-2.0 (see LICENSE.md).
-
+#
+# `msrv` is the minimum Rust version this policy targets; it drives Clippy's
+# MSRV-aware lint suggestions. It is intentionally independent of the toolchain
+# pinned by the test workspace in tests/MODULE.bazel (currently 1.85.0), which
+# only validates that the config wiring loads. Consumers should set their own
+# `rust-version`/toolchain to match the Rust version they actually support.
 msrv = "1.90.0"
+check-private-items = true
