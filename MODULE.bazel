@@ -17,4 +17,4 @@ module(
     compatibility_level = 0,
 )
 
-bazel_dep(name = "aspect_rules_lint", version = "2.0.0")
+bazel_dep(name = "aspect_rules_lint", version = "2.0.0", dev_dependency = True)
