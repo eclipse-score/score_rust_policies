@@ -1,5 +1,5 @@
 # rustfmt defaults for S-CORE repositories.
-# License: Apache-2.0 (see LICENSE.md).
+# License: Apache-2.0 (see LICENSE).
 
 edition = "2021"
 tab_spaces = 4

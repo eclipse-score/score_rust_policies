@@ -118,7 +118,8 @@ Notes:
 ## Repository layout
 - `MODULE.bazel`: Bazel module metadata for `score_rust_policies`.
 - `BUILD.bazel`: repo root package (tooling configs live in subpackages).
-- `LICENSE.md`: Apache License 2.0.
+- `LICENSE`: Apache License 2.0.
+- `NOTICE`: Eclipse Foundation notice file.
 - `CONTRIBUTION.md`: contribution process and links to S-CORE guidelines.
 - `.gitignore`: common ignores for Bazel and development tooling.
 - `clippy/`: Clippy-only configs exported as `@score_rust_policies//clippy/{strict,relaxed}:clippy.toml`.
@@ -132,4 +133,4 @@ Notes:
 See `CONTRIBUTION.md` for how to propose and review policy changes. All contributions require ECA/DCO sign-off and follow the Eclipse Foundation project handbook.
 
 ## License
-Apache License 2.0. See `LICENSE.md`.
+Apache License 2.0. See `LICENSE`.
