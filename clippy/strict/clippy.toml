@@ -1,4 +1,4 @@
 # clippy.toml - ASIL-B profile, compatible with your Clippy version
-# License: Apache-2.0 (see LICENSE.md).
+# License: Apache-2.0 (see LICENSE).
 
 msrv = "1.90.0"
