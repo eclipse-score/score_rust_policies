@@ -1,0 +1,103 @@
+# Cargo.toml lint profile – safety-oriented practical baseline
+# License: Apache-2.0 (see LICENSE.md).
+#
+# Background and rationale: https://eclipse-score.github.io/score/contribute/development/rust/coding_guidelines.html
+#
+# Copy the [lints.rust], [lints.clippy], and [profile.release] sections below
+# into your project's Cargo.toml to adopt the SCORE practical baseline.
+
+# Rust compiler lints (rustc)
+[lints.rust]
+# Relaxed baseline keeps the lint visible but does not fail the build.
+unsafe_op_in_unsafe_fn = "warn"
+missing_abi = "warn"
+unreachable_pub = "warn"
+missing_docs = "warn"
+unused_results = "warn"
+let_underscore_drop = "warn"
+# non_exhaustive_omitted_patterns is unstable and emits an "unknown lint"
+# warning on stable toolchains. Enable it only on nightly (requires
+# #![feature(non_exhaustive_omitted_patterns_lint)]). Keep this in sync with
+# rustc-lints/flags.bzl.
+# non_exhaustive_omitted_patterns = "warn"
+
+# Rustc lints recommended to evaluate as warn
+elided_lifetimes_in_paths = "warn"
+explicit_outlives_requirements = "warn"
+macro_use_extern_crate = "warn"
+meta_variable_misuse = "warn"
+non_local_definitions = "warn"
+redundant_lifetimes = "warn"
+single_use_lifetimes = "warn"
+trivial_numeric_casts = "warn"
+unit_bindings = "warn"
+unnameable_types = "warn"
+variant_size_differences = "warn"
+
+# Edition and compatibility lint groups (baseline intent)
+# Enable rust-<YEAR>-* and keyword-idents-<YEAR> lints supported by the
+# pinned compiler version.
+unused = { level = "warn", priority = -1 }
+
+# Future/availability-dependent rustc lints (enable when available in
+# the selected toolchain)
+# must_not_suspend = "warn"
+# fuzzy_provenance_casts = "warn"
+# lossy_provenance_casts = "warn"
+
+# Clippy lints
+[lints.clippy]
+# Warn
+as_underscore = "warn"
+cast_lossless = "warn"
+cast_possible_truncation = "warn"
+cast_possible_wrap = "warn"
+cast_sign_loss = "warn"
+cast_ptr_alignment = "warn"
+exit = "warn"
+format_push_string = "warn"
+infinite_loop = "warn"
+iter_over_hash_type = "warn"
+invalid_upcast_comparisons = "warn"
+lossy_float_literal = "warn"
+missing_errors_doc = "warn"
+missing_docs_in_private_items = "warn"
+panic_in_result_fn = "warn"
+ptr_cast_constness = "warn"
+ref_as_ptr = "warn"
+transmute_ptr_to_ptr = "warn"
+redundant_type_annotations = "warn"
+shadow_reuse = "warn"
+shadow_unrelated = "warn"
+try_err = "warn"
+wildcard_enum_match_arm = "warn"
+
+# Silent wrong-value correctness (no panic)
+# These produce silently wrong results or resource leaks rather than panicking,
+# so they are not caught by process supervision.
+float_cmp = "warn"            # exact float `==` / `!=` is silently wrong
+mem_forget = "warn"           # skipping `Drop` leaks resources without panicking
+
+# Deny
+as_ptr_cast_mut = "deny"
+let_underscore_must_use = "deny"
+missing_panics_doc = "deny"
+undocumented_unsafe_blocks = "deny"
+wildcard_imports = "deny"
+declare_interior_mutable_const = "deny"
+
+# Allow
+shadow_same = "allow"
+implicit_return = "allow"
+allow_attributes = "allow"
+
+# Evaluate for helpfulness
+panicking_overflow_checks = "warn"
+unwrap_used = "warn"
+
+# Recommended against because too coarse
+as_conversions = "allow"
+
+# Release profile requirement
+[profile.release]
+overflow-checks = true   # Required for safety-oriented integer checks
